@@ -5,20 +5,34 @@ data = [int(n.strip()) for n in data]
 data.sort()
 
 # You now have a sorted list of integers
-device_jolts = 170
-last_jolts = 0
 
-differences = []
+class Node():
 
-for adapter in data:
-    # Calculate the difference between this adapter and the last one
-    diff = adapter - last_jolts
-    differences.append(diff)
-    last_jolts = adapter
+    def __init__(self, data=None):
+        self._data = data
+        self._branches = []
+    
+    @property
+    def data(self):
+        return self._data
+    
+    @data.setter
+    def data(self, newdata):
+        self._data = newdata
 
-# Don't forget the device
-differences.append(device_jolts-data[len(data)-1])
+    @property
+    def branch(self):
+        return self._branches
+    
+    @branch.setter
+    def branch (self, newbranch):
+        self._branches.append(newbranch)
+    
+    def print_tree(self):
+        print(self._data)
+        for branch in self._branches:
+            branch.print_tree()
 
-result = differences.count(1) * differences.count(3)
 
-print(result)
+root = Node(0)
+root.print_tree()
